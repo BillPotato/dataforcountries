@@ -9,12 +9,13 @@ import Country from "./components/Country"
 const App = () => {
   // state declarations
   const [allCountries, setAllCountries] = useState([])
-  const [filterValue, setFilterValue] = useState("")
+  const [filterValue, setFilterValue] = useState("Vietnam")
 
 
 
   // non-state declarations
-  const API_key = ""
+  const API_key = import.meta.env.VITE_OPENWEATHER_API
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 
 
@@ -33,7 +34,7 @@ const App = () => {
   // fetch country data
   useEffect(() => {
     axios
-      .get("https://studies.cs.helsinki.fi/restcountries/api/all")
+      .get(`${BACKEND_URL}/countries`)
       .then(response => setAllCountries(response.data))
   }, [])
 
