@@ -1,21 +1,15 @@
 const morgan = require("./middleware/morgan")
 const express = require("express")
 const axios = require("axios")
-const { createClient } = require("redis");
 const cors = require("cors")
+const {
+  redisClient,
+  getOrSet
+} = require("./utils/redis")
 const { 
   unknownEndpointHandler, 
   errorHandler 
 } = require("./middleware/errorHandlers");
-
-let redisClient;
-(async () => {
-  redisClient = createClient();
-
-  redisClient.on('error', (err) => console.log('Redis Client Error', err));
-
-  await redisClient.connect();
-})();
 
 const app = express()
 
@@ -27,16 +21,14 @@ app.use(morgan(":method :url :status :res[content-length] - :response-time ms :b
 
 
 app.get("/countries", async (req, res) => {
-  const data = await redisClient.get("countries")
-  if (data !== null) return res.json(JSON.parse(data))
+  const countries = await getOrSet("countries", async () => {
+    const { data } = await axios
+      .get("https://studies.cs.helsinki.fi/restcountries/api/all")
 
-  await axios
-    .get("https://studies.cs.helsinki.fi/restcountries/api/all")
-    .then(reqres => {
-      redisClient.SET("countries", JSON.stringify(reqres.data))
-      return res.json(reqres.data)
-    })
+    return data
+  })
 
+  res.json(countries)
 })
 
 
