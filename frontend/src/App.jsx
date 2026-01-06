@@ -14,8 +14,7 @@ const App = () => {
 
 
   // non-state declarations
-  const API_key = import.meta.env.VITE_OPENWEATHER_API
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+  const BACKEND_URL = "/api"
 
 
 
@@ -57,7 +56,7 @@ const App = () => {
     <div>
       <Filter value = {filterValue} onChange = {onFilterChange} />
       <List displayedCountries = {displayedCountries} onClick = {onShow} />
-      <Country displayedCountries = {displayedCountries} API_key = {API_key} />
+      <Country displayedCountries = {displayedCountries} />
     </div>
   )
 }

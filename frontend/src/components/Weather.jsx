@@ -1,10 +1,10 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 
-const Weather = ({ country, API_key }) => {
+const Weather = ({ country }) => {
 	const lat = country.capitalInfo.latlng[0]
 	const lon = country.capitalInfo.latlng[1]
-	const weatherURL = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&id=524901&appid=${API_key}`	
+	const weatherURL = `/api/weather?lon=${lon}&lat=${lat}`
 	const [weatherData, setWeatherData] = useState(null)
 
 	

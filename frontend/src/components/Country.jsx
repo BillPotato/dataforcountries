@@ -1,6 +1,6 @@
 import Weather from "./Weather.jsx"
 
-const Country = ({ displayedCountries, API_key }) => {
+const Country = ({ displayedCountries }) => {
 	if (displayedCountries.length != 1) return null
 
 	const country = displayedCountries[0]
@@ -20,7 +20,7 @@ const Country = ({ displayedCountries, API_key }) => {
 				})}
 			</ul>
 			<img src = {country.flags.svg} width="300" />
-			<Weather country = {country} API_key = {API_key} />
+			<Weather country = {country} />
 		</div>
 	)
 }
