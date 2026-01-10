@@ -1,9 +1,10 @@
+"use client"
+
 import {useState, useEffect} from "react"
-import axios from "axios"
 
 import Filter from "./components/Filter.jsx"
 import List from "./components/List.jsx"
-import Country from "./components/Country"
+import Country from "./components/Country.jsx"
 
 
 const App = () => {
@@ -32,9 +33,9 @@ const App = () => {
   // useEffect
   // fetch country data
   useEffect(() => {
-    axios
-      .get(`${BACKEND_URL}/countries`)
-      .then(response => setAllCountries(response.data))
+    fetch(`${BACKEND_URL}/countries`)
+      .then(res => res.json())
+      .then(data => setAllCountries(data))
   }, [])
 
 

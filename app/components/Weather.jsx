@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useState, useEffect } from "react"
 
 const Weather = ({ country }) => {
@@ -9,16 +8,18 @@ const Weather = ({ country }) => {
 
 	
 	useEffect(() => {
-		axios
-			.get(weatherURL)
-			.then(response => {
-				setWeatherData(response.data)
-				console.log(response.data)
-			})
+		fetch(weatherURL)
+    .then(res => res.json())
+    .then(data => {
+      setWeatherData(data)
+      console.log(data)
+    })
 	}, [country])
 	
 
-	if (weatherData == null) return null
+	if (weatherData == null || weatherData.error) return null
+
+  console.log("weather data: ", weatherData)
 
 	const temp = weatherData.list[0].main.temp
 	const imgURL = `https://openweathermap.org/img/wn/${weatherData.list[0].weather[0].icon}@2x.png`
